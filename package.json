@@ -6,10 +6,16 @@
   "private": true,
   "scripts": {
     "start": "bun run src/index.js",
-    "dev": "bun --watch src/index.js"
+    "dev": "bun --watch src/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/js": "^10.0.1",
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@types/bun": "latest",
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0"
   },
   "peerDependencies": {
     "typescript": "^5"
