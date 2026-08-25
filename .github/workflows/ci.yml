@@ -22,12 +22,15 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
+      # Run ESLint; capture exit code so we can fail the job after SARIF upload
       - name: Run ESLint
+        id: eslint
         run: |
+          set +e
           bunx eslint . \
             --format=@microsoft/eslint-formatter-sarif \
-            --output-file=eslint-results.sarif \
-            || true
+            --output-file=eslint-results.sarif
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
           if [ ! -f eslint-results.sarif ]; then
             echo "ESLint did not produce eslint-results.sarif"
             exit 1
@@ -39,3 +42,9 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           category: eslint
+
+      - name: Fail job on ESLint errors
+        if: steps.eslint.outputs.exit_code != '0'
+        run: |
+          echo "ESLint failed with exit code ${{ steps.eslint.outputs.exit_code }}"
+          exit 1
