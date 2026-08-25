@@ -27,6 +27,9 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .cache
 *.tsbuildinfo
 
+# code scanning artifacts
+*.sarif
+
 # IntelliJ based IDEs
 .idea
 
